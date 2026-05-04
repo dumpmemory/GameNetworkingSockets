@@ -13,6 +13,11 @@ find_package(Protobuf QUIET CONFIG)
 if(NOT Protobuf_FOUND)
 	find_package(Protobuf REQUIRED)
 endif()
+# Module mode (FindProtobuf.cmake) creates Protobuf::libprotobuf (capital P);
+# config mode creates protobuf::libprotobuf (lowercase). Alias so either works.
+if(NOT TARGET protobuf::libprotobuf AND TARGET Protobuf::libprotobuf)
+	add_library(protobuf::libprotobuf ALIAS Protobuf::libprotobuf)
+endif()
 find_package(Threads REQUIRED)
 
 set(GNS_COMMON_PROTOS
